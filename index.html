@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Electricity Usage & Bill Optimizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <section class="auth-shell" id="authShell">
+      <div class="auth-hero">
+        <p class="eyebrow">Personal Energy Workspace</p>
+        <h1>Smart Electricity Usage &amp; Bill Optimizer</h1>
+        <p class="hero__subtitle">
+          Register once, personalize your dashboard, and control exactly which insights you want to see.
+        </p>
+        <div class="auth-hero__highlights">
+          <div>
+            <strong>Realtime analytics</strong>
+            <span>Monitor daily, monthly, and device-wise usage in one place.</span>
+          </div>
+          <div>
+            <strong>Saved preferences</strong>
+            <span>Keep your login and feature choices active even after refresh.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button type="button" class="auth-tab is-active" id="showLoginTab">Login</button>
+          <button type="button" class="auth-tab" id="showRegisterTab">Register</button>
+        </div>
+
+        <form class="auth-form" id="loginForm">
+          <div class="card__header card__header--compact">
+            <div>
+              <p class="card__label">Account Access</p>
+              <h2>Login to Dashboard</h2>
+            </div>
+          </div>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" id="loginEmail" placeholder="Enter your email" required>
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+          </label>
+          <button type="submit" class="primary-button">Login</button>
+        </form>
+
+        <form class="auth-form is-hidden" id="registerForm">
+          <div class="card__header card__header--compact">
+            <div>
+              <p class="card__label">Create Account</p>
+              <h2>Register New Profile</h2>
+            </div>
+          </div>
+          <label class="field">
+            <span>Name</span>
+            <input type="text" id="registerName" placeholder="Enter your name" required>
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" id="registerEmail" placeholder="Enter your email" required>
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" id="registerPassword" placeholder="Create a password" required>
+          </label>
+          <button type="submit" class="primary-button">Register</button>
+        </form>
+
+        <p class="auth-message" id="authMessage"></p>
+      </div>
+    </section>
+
+    <section class="app-shell is-hidden" id="appShell">
+      <header class="hero">
+        <div class="hero__content">
+          <p class="eyebrow hero__eyebrow">Smart Energy Intelligence</p>
+          <div class="brand-lockup">
+            <div class="brand-mark" aria-hidden="true">&#9889;</div>
+            <div class="brand-copy">
+              <p class="brand-title">WattWise AI</p>
+              <p class="brand-tagline">Track. Predict. Optimize your electricity usage.</p>
+            </div>
+          </div>
+          <p class="hero__subtitle" id="welcomeText">
+            Welcome back. Your personalized dashboard is ready with live device controls, billing projections, and efficiency insights.
+          </p>
+          <div class="hero__highlights">
+            <span class="hero-chip">Realtime device analytics</span>
+            <span class="hero-chip">Bill forecasting</span>
+            <span class="hero-chip">Efficiency optimization</span>
+          </div>
+        </div>
+        <div class="hero__panel">
+          <div class="hero__panel-top">
+            <div class="status-pill">
+              <span class="status-dot"></span>
+              Live demo insights
+            </div>
+            <div class="hero__controls">
+              <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark mode" aria-pressed="false">
+                <span class="theme-toggle__icon" id="themeToggleIcon" aria-hidden="true">LT</span>
+                <span class="theme-toggle__track">
+                  <span class="theme-toggle__thumb"></span>
+                </span>
+                <span class="theme-toggle__label" id="themeToggleLabel">Light Mode</span>
+              </button>
+              <button type="button" class="secondary-button header-action-button" id="clearAllButton">Clear All</button>
+            </div>
+          </div>
+          <div class="hero__stats">
+            <div class="hero-stat-card hero-stat-card--primary">
+              <span>Billing cycle</span>
+              <strong>March 2026</strong>
+              <small>Live monthly tracking window</small>
+            </div>
+            <div class="hero-stat-card">
+              <span>Efficiency score</span>
+              <strong id="heroEfficiencyValue">100 / 100</strong>
+              <small>Updated from your active devices</small>
+            </div>
+          </div>
+          <div class="hero__note">
+            <span class="hero__note-label">Workspace status</span>
+            <p>Clear signals, lower bills, and smarter usage patterns all in one elegant dashboard.</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="card profile-card">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Profile</p>
+              <h2>User Profile</h2>
+            </div>
+            <div class="suggestions-badge">Session active</div>
+          </div>
+          <div class="profile-summary">
+            <div>
+              <span>Name</span>
+              <strong id="profileName">-</strong>
+            </div>
+            <div>
+              <span>Email</span>
+              <strong id="profileEmail">-</strong>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="secondary-button" id="editProfileButton">Edit Profile</button>
+            <button type="button" class="danger-button" id="logoutButton">Logout</button>
+          </div>
+        </section>
+
+        <section class="card settings-card">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Control Panel</p>
+              <h2>Feature Settings</h2>
+            </div>
+            <div class="suggestions-badge">Saved preferences</div>
+          </div>
+          <div class="settings-list">
+            <label class="setting-toggle">
+              <span>Show Device Comparison</span>
+              <input type="checkbox" data-feature-toggle="comparison">
+              <span class="setting-toggle__slider"></span>
+            </label>
+            <label class="setting-toggle">
+              <span>Show Energy Efficiency Score</span>
+              <input type="checkbox" data-feature-toggle="efficiency">
+              <span class="setting-toggle__slider"></span>
+            </label>
+            <label class="setting-toggle">
+              <span>Show Smart Alerts</span>
+              <input type="checkbox" data-feature-toggle="alerts">
+              <span class="setting-toggle__slider"></span>
+            </label>
+            <label class="setting-toggle">
+              <span>Show Usage History Graph</span>
+              <input type="checkbox" data-feature-toggle="history">
+              <span class="setting-toggle__slider"></span>
+            </label>
+            <label class="setting-toggle">
+              <span>Show AI Suggestions</span>
+              <input type="checkbox" data-feature-toggle="suggestions">
+              <span class="setting-toggle__slider"></span>
+            </label>
+          </div>
+        </section>
+
+        <section class="card add-device-card">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Device Input</p>
+              <h2>Add Device</h2>
+            </div>
+            <div class="suggestions-badge">Live calculator</div>
+          </div>
+          <form class="device-form" id="deviceForm">
+            <label class="field">
+              <span>Device Name</span>
+              <input type="text" id="deviceName" name="deviceName" placeholder="Enter device name" required>
+            </label>
+            <label class="field">
+              <span>Power Rating (Watts)</span>
+              <input type="number" id="devicePower" name="devicePower" placeholder="e.g. 1200" min="1" step="1" required>
+            </label>
+            <label class="field">
+              <span>Usage Hours per Day</span>
+              <input type="number" id="deviceHours" name="deviceHours" placeholder="e.g. 6" min="0.1" step="0.1" required>
+            </label>
+            <div class="form-actions">
+              <button type="submit" class="primary-button">Add Device</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="card card--chart">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Usage Analytics</p>
+              <h2>Device-wise electricity usage</h2>
+            </div>
+            <div class="suggestions-badge" id="chartStatus">No devices added yet</div>
+          </div>
+          <div class="chart-wrap">
+            <div class="chart-empty-state" id="chartEmptyState">No devices added yet</div>
+            <canvas id="usageChart" aria-label="Bar chart showing electricity usage by appliance"></canvas>
+          </div>
+        </section>
+
+        <section class="card metric-card">
+          <div class="metric-card__icon" aria-hidden="true">kWh</div>
+          <p class="card__label">Consumption</p>
+          <h2>Total units consumed</h2>
+          <div class="metric-card__value" id="totalUnits">0</div>
+          <p class="metric-card__meta">Total daily units tracked across all listed devices.</p>
+        </section>
+
+        <section class="card metric-card">
+          <div class="metric-card__icon" aria-hidden="true">Rs</div>
+          <p class="card__label">Cost Projection</p>
+          <h2>Estimated electricity bill</h2>
+          <div class="metric-card__value" id="estimatedBill">&#8377;0</div>
+          <p class="metric-card__meta">Calculated at Rs 8 per unit using daily consumption totals.</p>
+        </section>
+
+        <section class="card comparison-card feature-section" data-feature-section="comparison">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Comparison</p>
+              <h2>Device Comparison</h2>
+            </div>
+            <div class="suggestions-badge">Live ranking</div>
+          </div>
+          <div class="comparison-grid">
+            <div class="comparison-stat comparison-stat--high">
+              <span>Highest Consumption</span>
+              <strong id="highestDeviceName">No devices added yet</strong>
+              <small id="highestDeviceUnits">0.00 kWh</small>
+            </div>
+            <div class="comparison-stat comparison-stat--low">
+              <span>Lowest Consumption</span>
+              <strong id="lowestDeviceName">No devices added yet</strong>
+              <small id="lowestDeviceUnits">0.00 kWh</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="card efficiency-card feature-section" data-feature-section="efficiency">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Efficiency</p>
+              <h2>Energy Efficiency Score</h2>
+            </div>
+            <div class="suggestions-badge" id="efficiencyLabel">Excellent</div>
+          </div>
+          <div class="efficiency-panel">
+            <div class="efficiency-ring">
+              <div class="efficiency-ring__inner">
+                <strong id="efficiencyScore">100</strong>
+                <span>/100</span>
+              </div>
+            </div>
+            <div class="efficiency-copy">
+              <p id="efficiencyText">Excellent efficiency based on current daily usage.</p>
+              <div class="efficiency-bar">
+                <div class="efficiency-bar__fill" id="efficiencyBarFill"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card prediction-card">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Forecast</p>
+              <h2>Monthly Prediction</h2>
+            </div>
+            <div class="suggestions-badge">30-day estimate</div>
+          </div>
+          <div class="prediction-grid">
+            <div class="prediction-stat">
+              <span>Daily Units</span>
+              <strong id="predictionDailyUnits">0.00 kWh</strong>
+            </div>
+            <div class="prediction-stat">
+              <span>Monthly Units</span>
+              <strong id="predictionMonthlyUnits">0.00 kWh</strong>
+            </div>
+            <div class="prediction-stat prediction-stat--highlight">
+              <span>Estimated Monthly Bill</span>
+              <strong id="predictionMonthlyBill">&#8377;0</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="card alerts-card feature-section" data-feature-section="alerts">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Smart Alerts</p>
+              <h2>Usage Notifications</h2>
+            </div>
+            <div class="suggestions-badge" id="alertCount">0 alerts</div>
+          </div>
+          <div class="alerts-list" id="alertsList"></div>
+        </section>
+
+        <section class="card suggestions-card feature-section" data-feature-section="suggestions">
+          <div class="card__header">
+            <div>
+              <p class="card__label">AI Recommendations</p>
+              <h2>Energy saving suggestions</h2>
+            </div>
+            <div class="suggestions-badge" id="suggestionCount">0 actions</div>
+          </div>
+          <div class="suggestions-list" id="suggestionsList"></div>
+        </section>
+
+        <section class="card devices-card">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Tracked Devices</p>
+              <h2>Daily consumption breakdown</h2>
+            </div>
+            <div class="suggestions-badge" id="deviceCount">0 devices</div>
+          </div>
+          <div class="table-wrap">
+            <table class="device-table">
+              <thead>
+                <tr>
+                  <th>Device Name</th>
+                  <th>Power</th>
+                  <th>Hours</th>
+                  <th>Units Consumed</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="deviceTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="card history-card feature-section" data-feature-section="history">
+          <div class="card__header">
+            <div>
+              <p class="card__label">Trend Analysis</p>
+              <h2>Usage History</h2>
+            </div>
+            <div class="suggestions-badge">Last 7 days</div>
+          </div>
+          <div class="history-chart-wrap">
+            <canvas id="historyChart" aria-label="Line chart showing electricity usage history over days"></canvas>
+          </div>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
